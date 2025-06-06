@@ -1,0 +1,93 @@
+---
+title: Quickstart
+description: "Get started with RuloDB in minutes."
+---
+
+## Fire Up the Server
+
+<Note>
+  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you happen to be using a different architecture, you can [build RuloDB from source](/internals/building-from-source)._
+</Note>
+
+<Steps>
+  <Step title="Download RuloDB">
+    Visit the [RuloDB releases page](https://github.com/rulodb/rulodb/releases) and download the appropriate version for your operating system.
+  </Step>
+
+  <Step title="Unarchive the binary">
+    Extract the downloaded archive to a directory of your choice.
+
+    ```shell
+    unzip rulodb-<os>.zip
+    ```
+  </Step>
+
+  <Step title="Start RuloDB">
+    Navigate to the extracted directory and run the binary.
+
+    ```shell
+    ./rulodb
+    ```
+
+  </Step>
+</Steps>
+
+## Connect Using an SDK
+
+<Note>
+  Currently, the only available SDK is the TypeScript SDK. More SDKs are coming later, when the query language reaches a somewhat stable state. The steps below are assuming that you have [Bun](https://bun.sh/) installed. However, the TypeScript SDK is not depending on any features of Bun, so you may use other runtimes.
+</Note>
+
+<Steps>
+    <Step title="Create a new project">
+    ```shell
+    mkdir quickstart
+    cd quickstart
+    bun init -y
+    ```
+    </Step>
+
+  <Step title="Install the SDK">
+    ```shell
+    bun add msgpackr
+    bun add @rulodb/rulodb
+    ```
+  </Step>
+
+  <Step title="Bring Your Own Client">
+    <Note>
+      To provide wide-range support for different runtimes, as of now, no clients are shipped with the SDK. When the client-server authentication is implemented, the SDKs will implement a client that can connect to RuloDB.
+    </Note>
+
+    For now, download the Bun client, and save it as `client.ts` within your project root directory.
+
+    ```shell
+    curl -sSL https://gist.githubusercontent.com/gabor-boros/a1cefcb48f059f5e7905cb2110ebb82c/raw/e8abf3ef5e02311fdd30606a30c652bdd54066dc/client.ts -o ./client.ts
+    ```
+  </Step>
+
+  <Step title="Write some queries">
+    Replace the content of the auto-generated `index.ts` with the following code:
+
+    ```ts
+    import { r } from '@rulodb/rulodb';
+    import { Client } from "./client";
+
+    const client = new Client();
+    await client.connect("127.0.0.1", 6969);
+
+    const response = await r.db().table("default").insert({ name: "Thor", power: 100 }).run(client);
+    console.table(response.result);
+    ```
+  </Step>
+
+  <Step title="Write some queries">
+    Run `index.ts` using Bun:
+
+    ```shell
+    bun index.ts
+    ```
+
+    In your terminal, you should see the newly inserted document. Congratulations! 🥳 You have successfully connected to RuloDB and inserted a document.
+  </Step>
+</Steps>

@@ -1,0 +1,15 @@
+labelPRBasedOnFilePath:
+  build:
+    - .github/workflows/**/*
+  legal:
+    - LICENSE
+
+firstPRWelcomeComment: |
+  Thanks for opening this pull request! 🥳
+  Please check out our [contributing guide](https://github.com/rulodb/docs/blob/main/CONTRIBUTING.md).
+
+firstPRMergeComment: |
+  Awesome work, congrats on your first merged pull request! 🎉 🥳
+
+firstIssueWelcomeComment: |
+  Thanks for opening your first issue here! 🎉 We will triage it soon.
