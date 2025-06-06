@@ -1,0 +1,75 @@
+---
+title: r (root)
+description: 'The root object to build queries.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+In Rulo, the `r` object is the root object to build queries. It provides a set of functions to perform various operations on data. Every query starts with the `r` object.
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r → builder
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="builder" type="object">
+  The query builder object.
+</ParamField>
+
+## Behavior
+
+No special behavior.
+
+## Notes & Caveats
+
+No notes.
+
+## Example
+
+### Using the query builder
+
+Filter for `orders` where the order's `status` is `shipped` or `delivered`.
+
+<CodeGroup>
+
+```ts TypeScript
+import { Client, r } from '@rulodb/rulodb';
+
+const client = new Client();
+await client.connect();
+
+// Use `r` to build a query and execute it
+await r.dbCreate('myDb').run(client);
+
+await client.disconnect();
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`db`](/sdk/referencing-a-database) - Referencing a Database
+- [`dbCreate`](/sdk/create-database) - Create a Database
+- [`dbDrop`](/sdk/drop-database) - Drop a Database
+- [`dbList`](/sdk/list-databases) - List Databases
+- [`table`](/sdk/referencing-a-table) - Referencing a Table
+- [`tableCreate`](/sdk/create-table) - Create a Table
+- [`tableDrop`](/sdk/drop-table) - Drop a Table
+- [`tableList`](/sdk/list-tables) - List Tables
+
+<DocumentationFooter />

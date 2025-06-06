@@ -1,0 +1,39 @@
+---
+title: Installing RuloDB
+description: ''
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+<Note>
+  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds
+  are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you
+  happen to be using a different architecture, you can [build RuloDB from
+  source](/internals/building-from-source)._
+</Note>
+
+<Steps>
+  <Step title="Download RuloDB">
+    Visit the [RuloDB releases page](https://github.com/rulodb/rulodb/releases) and find the appropriate version for your operating system.
+
+    ```shell
+    # Replace $DIST with your distribution (e.g., linux, windows, macos)
+    curl -sSL https://github.com/rulodb/rulodb/releases/latest/download/rulodb-$DIST -o rulodb
+    chmod +x ./rulodb
+    ```
+
+  </Step>
+
+  <Step title="Start RuloDB">
+    Navigate to the extracted directory and run the binary.
+
+    ```shell
+    # Start RuloDB with your desired log level
+    RUST_LOG=rulodb=info ./rulodb start
+    ```
+
+  </Step>
+
+</Steps>
+
+<DocumentationFooter />

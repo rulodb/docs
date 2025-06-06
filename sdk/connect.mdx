@@ -1,0 +1,87 @@
+---
+title: connect
+description: 'Connect to a RuloDB instance.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+To execute queries, you need to connect to RuloDB using the `connect` function of a `Client` instance. Every `Client` instance handles a connection pool internally, ensuring efficient reuse of connections.
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+client = Client({optargs})
+client.connect() → void
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+Optional arguments to customize the behavior of the function. Provided as an `object`.
+
+<ParamField body="host" type="string" default="localhost">
+  The hostname or IP address of the database server.
+</ParamField>
+
+<ParamField body="port" type="number" default="6090">
+  The port number of the database server.
+</ParamField>
+
+<ParamField body="timeout" type="number" default="30000">
+  The timeout in milliseconds for database operations.
+</ParamField>
+
+<ParamField body="retries" type="number" default="3">
+  The number of retries for failed database operations.
+</ParamField>
+
+<ParamField body="poolSize" type="number" default="10">
+  The maximum number of connections in the connection pool.
+</ParamField>
+
+### Returns
+
+No return value.
+
+## Behavior
+
+- When a client is created, a connection pool is created internally.
+
+## Notes & Caveats
+
+- The client is created with a new `Client` instance. However, that is subject to change in future versions.
+
+## Example
+
+### Opening a connection
+
+Filter for `orders` where the order's `status` is `shipped` or `delivered`.
+
+<CodeGroup>
+
+```ts TypeScript
+import { Client, r } from '@rulodb/rulodb';
+const client = new Client();
+
+// Connect to RuloDB
+await client.connect();
+
+await r.dbCreate('myDb').run(client);
+await client.disconnect();
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`disconnect`](/sdk/disconnect) - Disconnecting from RuloDB
+
+<DocumentationFooter />

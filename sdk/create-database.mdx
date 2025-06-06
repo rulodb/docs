@@ -1,0 +1,79 @@
+---
+title: dbCreate
+description: 'Create a new database.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+A database is a collection of tables, similar to relational databases. To create a new database, use the `dbCreate` function.
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.dbCreate(name) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="name" type="string" required>
+  Name of the database to create. See [notes](#notes-%26-caveats) for restrictions.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ResponseField name="result" type="object">
+  Information about the operation.
+
+  <Expandable title="properties">
+    <ResponseField name="created" type="number">
+        The number of databases created.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Behavior
+
+- Creating a new database is a synchronous operation.
+- When the database is created, it is immediately available for use.
+- When a new RuloDB instance is started with a fresh data directory, a new database, called `default`, is created automatically.
+
+## Notes & Caveats
+
+- The database name must be less than 255 characters.
+- The database name must consist of ASCII alphanumeric characters, hyphens, and underscores.
+- The database name must be unique within the RuloDB instance.
+- The database name must **not** be a reserved database name. The following names are reserved:
+  - `__system__`
+
+## Example
+
+### Creating a Database
+
+Create a new database called `test`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r.dbCreate('test').run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`db`](/sdk/referencing-a-database) - Referencing a database
+- [`dbDrop`](/sdk/drop-database) - Dropping a database
+- [`dbList`](/sdk/list-databases) - Listing databases
+
+<DocumentationFooter />

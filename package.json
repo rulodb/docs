@@ -1,0 +1,24 @@
+{
+  "name": "rulodb-docs",
+  "description": "Documentation for RuloDB",
+  "version": "0.0.0",
+  "author": {
+    "name": "Opcotech Developers",
+    "email": "dev@opcotech.com"
+  },
+  "license": "CC-BY-4.0",
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "mint dev",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "mint": "^4.1.73",
+    "prettier": "^3.5.3"
+  }
+}

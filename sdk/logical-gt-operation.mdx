@@ -1,0 +1,79 @@
+---
+title: gt (>)
+description: 'Check if two values are greater than each other.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+To check if two values are greater than each other, use the `gt` function, which returns `true` if the first value is greater than the second value and `false` otherwise.
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+value.gt(otherValue) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="otherValue" type="string | number" required>
+  The value to compare with. The type of the value being compared depends on the value used for
+  comparison.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="result" type="boolean">
+  Returns `true` if the first value is greater than the second value and `false` otherwise.
+</ParamField>
+
+## Behavior
+
+No special behavior.
+
+## Notes & Caveats
+
+No notes.
+
+## Example
+
+### Filter high value orders
+
+Filter for orders in the `orders` table where the order's `value` is above `1 000 000`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .db()
+  .table('orders')
+  .filter((doc) => doc.value.gt(1_000_000))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq-operation) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne-operation) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt-operation) - Logical Less Than Operation
+- [`le`](/sdk/logical-le-operation) - Logical Less Than or Equal Operation
+- [`ge`](/sdk/logical-ge-operation) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and-operation) - Logical AND Operation
+- [`or`](/sdk/logical-or-operation) - Logical OR Operation
+- [`not`](/sdk/logical-not-operation) - Logical NOT Operation
+- [`field`](/sdk/referencing-a-field) - Referencing a Field
+- [`table`](/sdk/referencing-a-table) - Referencing a Table
+- [`filter`](/sdk/filter-documents) - Filtering Documents
+
+<DocumentationFooter />

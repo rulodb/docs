@@ -1,0 +1,179 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "linden",
+  "name": "RuloDB Documentation",
+  "description": "Explore the official RuloDB documentation for RuloDB internals, SDK references, guides, and tutorials.",
+  "icons": {
+    "library": "lucide"
+  },
+  "colors": {
+    "primary": "#BF5526",
+    "light": "#F28E5A",
+    "dark": "#222222"
+  },
+  "favicon": "favicon.png",
+  "logo": {
+    "light": "/logo-light.png",
+    "dark": "/logo-dark.png"
+  },
+  "styling": {
+    "eyebrows": "section"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://github.com/rulodb/rulodb/discussions"
+      },
+      {
+        "label": "",
+        "icon": "github",
+        "href": "https://github.com/rulodb/rulodb"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/rulodb/rulodb"
+    }
+  },
+  "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/rulodb/rulodb",
+          "icon": "github"
+        },
+        {
+          "anchor": "Changelog",
+          "href": "https://github.com/rulodb/rulodb/blob/main/CHANGELOG.md#changelog",
+          "icon": "book"
+        },
+        {
+          "anchor": "Discussions",
+          "href": "https://github.com/rulodb/rulodb/discussions",
+          "icon": "messages-square"
+        },
+        {
+          "anchor": "Chat on Discord",
+          "href": "https://discord.gg/RzeAMwSM5R",
+          "icon": "message-square-more"
+        }
+      ]
+    },
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Geting Started",
+            "pages": [
+              "introduction",
+              "getting-started/quickstart",
+              "getting-started/installing-rulodb",
+              "getting-started/cli-reference"
+            ]
+          },
+          {
+            "group": "The Rulo Query Language",
+            "pages": ["rulo/introduction", "rulo/relations-to-reql", "rulo/writing-new-clients"]
+          },
+          {
+            "group": "Operations",
+            "pages": [
+              "operations/configuration",
+              "operations/deployment",
+              "operations/backup-and-restore"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "troubleshooting/faq",
+              "troubleshooting/common-issues",
+              "troubleshooting/error-codes"
+            ]
+          },
+          {
+            "group": "RuloDB Internals",
+            "pages": [
+              "internals/data-types",
+              "internals/architecture",
+              "internals/building-from-source"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDKs",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "sdk/introduction",
+              "sdk/installation",
+              "sdk/authentication",
+              "sdk/response-schema"
+            ]
+          },
+          {
+            "group": "SDK Reference",
+            "pages": [
+              {
+                "group": "Connection & Setup",
+                "pages": ["sdk/r-root", "sdk/connect", "sdk/disconnect"]
+              },
+              {
+                "group": "Schema & Data Modeling",
+                "pages": [
+                  "sdk/create-database",
+                  "sdk/drop-database",
+                  "sdk/list-databases",
+                  "sdk/create-table",
+                  "sdk/drop-table",
+                  "sdk/list-tables"
+                ]
+              },
+              {
+                "group": "Data Manipulation",
+                "pages": ["sdk/insert-document", "sdk/update-document", "sdk/delete-document"]
+              },
+              {
+                "group": "Querying & Data Retrieval",
+                "pages": [
+                  "sdk/referencing-a-database",
+                  "sdk/referencing-a-table",
+                  "sdk/get-document",
+                  "sdk/filter-documents"
+                ]
+              },
+              {
+                "group": "Document Manipulation",
+                "pages": ["sdk/referencing-a-field"]
+              },
+              {
+                "group": "Math & Logical Operations",
+                "pages": [
+                  "sdk/logical-eq-operation",
+                  "sdk/logical-ne-operation",
+                  "sdk/logical-lt-operation",
+                  "sdk/logical-le-operation",
+                  "sdk/logical-gt-operation",
+                  "sdk/logical-ge-operation",
+                  "sdk/logical-and-operation",
+                  "sdk/logical-or-operation",
+                  "sdk/logical-not-operation"
+                ]
+              },
+              {
+                "group": "Control & Execution",
+                "pages": ["sdk/expressions"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+---
+title: disconnect
+description: 'Disconnect from a RuloDB instance.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+To close the connection to RuloDB, you need to call the `disconnect` function of a `Client` instance.
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+client.disconnect() → void
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+No return value.
+
+## Behavior
+
+- When a client is created, a connection pool is created internally.
+
+## Notes & Caveats
+
+- The client is created with a new `Client` instance. However, that is subject to change in future versions.
+
+## Example
+
+### Opening a connection
+
+Filter for `orders` where the order's `status` is `shipped` or `delivered`.
+
+<CodeGroup>
+
+```ts TypeScript
+import { Client, r } from '@rulodb/rulodb';
+const client = new Client();
+
+// Connect to RuloDB
+await client.connect();
+
+await r.dbCreate('myDb').run(client);
+await client.disconnect();
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`connect`](/sdk/connect) - Connecting to RuloDB
+
+<DocumentationFooter />

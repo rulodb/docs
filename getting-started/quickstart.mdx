@@ -1,0 +1,116 @@
+---
+title: Quickstart
+description: 'Get started with RuloDB in minutes.'
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+This guide will walk you through the process of setting up and running RuloDB on your machine, connecting to it using an SDK, and running your first query.
+
+It takes approximately 5 minutes to complete this guide. Get your coffee and let's get started!
+
+## Fire Up the Server
+
+<Note>
+  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds
+  are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you
+  happen to be using a different architecture, you can [build RuloDB from
+  source](/internals/building-from-source)._
+</Note>
+
+<Steps>
+  <Step title="Download RuloDB">
+    Visit the [RuloDB releases page](https://github.com/rulodb/rulodb/releases) and find the appropriate version for your operating system.
+
+    ```shell
+    # Replace $DIST with your distribution (e.g., linux, windows, macos)
+    curl -sSL https://github.com/rulodb/rulodb/releases/latest/download/rulodb-$DIST -o rulodb
+    chmod +x ./rulodb
+    ```
+
+  </Step>
+
+  <Step title="Start RuloDB">
+    Navigate to the extracted directory and run the binary.
+
+    ```shell
+    # Start RuloDB with your desired log level
+    RUST_LOG=rulodb=info ./rulodb start
+    ```
+
+  </Step>
+</Steps>
+
+## Connect Using an SDK
+
+<Note>
+  Currently, the only available SDK is the TypeScript SDK. More SDKs are coming later, when the
+  query language reaches a somewhat stable state. The steps below are assuming that you have
+  [Bun](https://bun.sh/) installed. However, the TypeScript SDK is not depending on any features of
+  Bun, so you may use other runtimes.
+</Note>
+
+<Steps>
+  <Step title="Create a new project">
+    Create a new directory and install the RuloDB Typescript client.
+
+    ```shell
+    mkdir quickstart
+    cd quickstart
+    bun add @rulodb/rulodb
+    ```
+
+  </Step>
+
+  <Step title="Write some queries">
+    Create a new file, `main.ts`, with the following content:
+
+    ```ts
+    // Import RuloDB SDK
+    import { Client, r } from '@rulodb/rulodb';
+
+    // Connect to RuloDB
+    const client = new Client({ host: 'localhost', port: 6090 });
+    await client.connect();
+
+    // Create heroes table if not exists
+    const tables = await r.db().tableList().run(client);
+    if (!(await tables.toArray()).includes('heroes')) {
+      await r.db().tableCreate('heroes').run(client);
+      console.log('✅ heroes table created');
+    }
+
+    const heroesTable = r.db().table('heroes');
+
+    // Insert a document into the default table
+    await heroesTable
+      .insert({ name: 'Thor', power: 100 })
+      .run(client);
+
+    console.log('✅ your hero got inserted');
+
+    // Get a cursor for the default table
+    const cursor = await heroesTable.run(client);
+
+    // Collect the cursor and print all heroes
+    console.table(await cursor.toArray());
+
+    // Close the client connection
+    await client.disconnect();
+    ```
+
+  </Step>
+
+  <Step title="Execute the script">
+    Run `main.ts` using Bun to create a new document in the default table.
+
+    ```shell
+    bun main.ts
+    ```
+
+    In your terminal, you should see the newly inserted document. Congratulations! 🥳 You have successfully connected to RuloDB, created a new table, and inserted a document.
+
+  </Step>
+</Steps>
+
+<DocumentationFooter />
