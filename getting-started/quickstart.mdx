@@ -78,6 +78,8 @@ description: "Get started with RuloDB in minutes."
 
     const response = await r.db().table("default").insert({ name: "Thor", power: 100 }).run(client);
     console.table(response.result);
+
+    client.close();
     ```
   </Step>
 
