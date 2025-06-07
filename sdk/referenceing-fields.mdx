@@ -1,4 +1,107 @@
 ---
-title: Referencing Fields
-description: ""
+title: row
+description: ''
 ---
+
+To access a specific field in each document of a sequence, use `row('field')`, which retrieves that field’s value from every document in the result set.
+
+## Syntax
+
+<CodeGroup>
+
+```typescript TypeScript
+r.row(field, [optargs]) → value
+table.row(field, [optargs]) → value
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="field" type="string" required>
+  Name of the field to reference. Use dot notation to reference nested fields.
+</ParamField>
+
+### Optargs
+
+Optional arguments to customize the behavior of the function. Provided as an `object`.
+
+<ParamField body="separator" type="string" default=".">
+  Separator to use when referencing nested fields
+</ParamField>
+
+### Returns
+
+<ParamField body="value" type="any">
+  Returns the value of the referenced field. The type of the value depends on the contents of that
+  field in each document.
+</ParamField>
+
+## Behavior
+
+- Using `table.row` automatically uses the type definition of the table's schema if defined.
+- The `r.row` is not aware of the table's schema by default.
+
+## Notes & Caveats
+
+- Whenever a field name contains a dot (`.`), provide a custom separator using the [`separator`](#optargs) option to avoid unexpected behavior.
+
+## Example
+
+### Filter users that are older than 21
+
+Filter for users in the `users` table where the user's `age` is greater than `21`.
+
+<CodeGroup>
+
+```typescript TypeScript
+const table = r.db().table('users');
+
+table.filter(table.row('age').ge(21));
+```
+
+</CodeGroup>
+
+### Filter orders from the UAE
+
+Filter for orders in the `orders` table where the order's shipping address `country` is `UAE`, where the country is a nested field of `address`.
+
+<CodeGroup>
+
+```typescript TypeScript
+const table = r.db().table('orders');
+
+table.filter(table.row('address.country').eq('UAE'));
+```
+
+</CodeGroup>
+
+### Filter for usernames
+
+Filter for users in the `users` table where the user's `property.username` (literal field name) is `john`. In this example, we use the `separator` option to specify a custom separator for nested fields.
+
+<CodeGroup>
+
+```typescript TypeScript
+const table = r.db().table('orders');
+
+table.filter(table.row('property.username', { separator: ',' }).eq('john'));
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq-operation) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne-operation) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt-operation) - Logical Less Than Operation
+- [`le`](/sdk/logical-le-operation) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt-operation) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge-operation) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and-operation) - Logical AND Operation
+- [`or`](/sdk/logical-or-operation) - Logical OR Operation
+- [`not`](/sdk/logical-not-operation) - Logical NOT Operation
+- [`table`](/sdk/referencing-a-table) - Referencing a Table
+- [`filter`](/sdk/filter-documents) - Filtering Documents
