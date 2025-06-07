@@ -1,12 +1,15 @@
 ---
 title: Quickstart
-description: "Get started with RuloDB in minutes."
+description: 'Get started with RuloDB in minutes.'
 ---
 
 ## Fire Up the Server
 
 <Note>
-  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you happen to be using a different architecture, you can [build RuloDB from source](/internals/building-from-source)._
+  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds
+  are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you
+  happen to be using a different architecture, you can [build RuloDB from
+  source](/internals/building-from-source)._
 </Note>
 
 <Steps>
@@ -20,13 +23,14 @@ description: "Get started with RuloDB in minutes."
     ```shell
     unzip rulodb-<os>.zip
     ```
+
   </Step>
 
   <Step title="Start RuloDB">
     Navigate to the extracted directory and run the binary.
 
     ```shell
-    ./rulodb
+    ./rulodb start
     ```
 
   </Step>
@@ -35,7 +39,10 @@ description: "Get started with RuloDB in minutes."
 ## Connect Using an SDK
 
 <Note>
-  Currently, the only available SDK is the TypeScript SDK. More SDKs are coming later, when the query language reaches a somewhat stable state. The steps below are assuming that you have [Bun](https://bun.sh/) installed. However, the TypeScript SDK is not depending on any features of Bun, so you may use other runtimes.
+  Currently, the only available SDK is the TypeScript SDK. More SDKs are coming later, when the
+  query language reaches a somewhat stable state. The steps below are assuming that you have
+  [Bun](https://bun.sh/) installed. However, the TypeScript SDK is not depending on any features of
+  Bun, so you may use other runtimes.
 </Note>
 
 <Steps>
@@ -47,12 +54,7 @@ description: "Get started with RuloDB in minutes."
     ```
     </Step>
 
-  <Step title="Install the SDK">
-    ```shell
-    bun add msgpackr
-    bun add @rulodb/rulodb
-    ```
-  </Step>
+<Step title="Install the SDK">```shell bun add msgpackr bun add @rulodb/rulodb ```</Step>
 
   <Step title="Bring Your Own Client">
     <Note>
@@ -64,6 +66,7 @@ description: "Get started with RuloDB in minutes."
     ```shell
     curl -sSL https://gist.githubusercontent.com/gabor-boros/a1cefcb48f059f5e7905cb2110ebb82c/raw/e8abf3ef5e02311fdd30606a30c652bdd54066dc/client.ts -o ./client.ts
     ```
+
   </Step>
 
   <Step title="Write some queries">
@@ -81,6 +84,7 @@ description: "Get started with RuloDB in minutes."
 
     client.close();
     ```
+
   </Step>
 
   <Step title="Write some queries">
@@ -91,5 +95,6 @@ description: "Get started with RuloDB in minutes."
     ```
 
     In your terminal, you should see the newly inserted document. Congratulations! 🥳 You have successfully connected to RuloDB and inserted a document.
+
   </Step>
 </Steps>
