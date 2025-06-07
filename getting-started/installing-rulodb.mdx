@@ -1,4 +1,35 @@
 ---
 title: Installing RuloDB
-description: ""
+description: ''
 ---
+
+<Note>
+  As RuloDB is in early stages of development, a limited set of architectures are supported. Builds
+  are available for x86_64 (on Ubuntu/Debian & Windows) and arm64 (on macOS) architectures. _If you
+  happen to be using a different architecture, you can [build RuloDB from
+  source](/internals/building-from-source)._
+</Note>
+
+<Steps>
+  <Step title="Download RuloDB">
+    Visit the [RuloDB releases page](https://github.com/rulodb/rulodb/releases) and download the appropriate version for your operating system.
+  </Step>
+
+  <Step title="Unarchive the binary">
+    Extract the downloaded archive to a directory of your choice.
+
+    ```shell
+    unzip rulodb-<os>.zip
+    ```
+
+  </Step>
+
+  <Step title="Start RuloDB">
+    Navigate to the extracted directory and run the binary.
+
+    ```shell
+    ./rulodb start
+    ```
+
+  </Step>
+</Steps>
