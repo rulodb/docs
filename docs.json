@@ -46,14 +46,19 @@
           "icon": "github"
         },
         {
+          "anchor": "Changelog",
+          "href": "https://github.com/rulodb/rulodb/blob/main/CHANGELOG.md#changelog",
+          "icon": "book"
+        },
+        {
           "anchor": "Discussions",
           "href": "https://github.com/rulodb/rulodb/discussions",
           "icon": "messages-square"
         },
         {
-          "anchor": "Changelog",
-          "href": "https://github.com/rulodb/rulodb/blob/main/CHANGELOG.md#changelog",
-          "icon": "book"
+          "anchor": "Chat on Matrix",
+          "href": "https://matrix.to/#/#rulodb:matrix.org",
+          "icon": "message-square-more"
         }
       ]
     },
@@ -72,11 +77,7 @@
           },
           {
             "group": "The Rulo Query Language",
-            "pages": [
-              "rulo/introduction",
-              "rulo/relations-to-reql",
-              "rulo/writing-new-clients"
-            ]
+            "pages": ["rulo/introduction", "rulo/relations-to-reql", "rulo/writing-new-clients"]
           },
           {
             "group": "Operations",
@@ -121,12 +122,7 @@
             "pages": [
               {
                 "group": "Connection & Setup",
-                "pages": [
-                  "sdk/r-root",
-                  "sdk/connect",
-                  "sdk/reconnect",
-                  "sdk/close-connection"
-                ]
+                "pages": ["sdk/r-root", "sdk/connect", "sdk/reconnect", "sdk/close-connection"]
               },
               {
                 "group": "Schema & Data Modeling",
@@ -141,11 +137,7 @@
               },
               {
                 "group": "Data Manipulation",
-                "pages": [
-                  "sdk/insert-document",
-                  "sdk/update-document",
-                  "sdk/delete-document"
-                ]
+                "pages": ["sdk/insert-document", "sdk/update-document", "sdk/delete-document"]
               },
               {
                 "group": "Querying & Data Retrieval",
