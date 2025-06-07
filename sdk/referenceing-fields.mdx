@@ -3,6 +3,8 @@ title: row
 description: ''
 ---
 
+import DocumentationFooter from "/snippets/documentation-footer.mdx";
+
 To access a specific field in each document of a sequence, use `row('field')`, which retrieves that field’s value from every document in the result set.
 
 ## Syntax
@@ -105,3 +107,5 @@ table.filter(table.row('property.username', { separator: ',' }).eq('john'));
 - [`not`](/sdk/logical-not-operation) - Logical NOT Operation
 - [`table`](/sdk/referencing-a-table) - Referencing a Table
 - [`filter`](/sdk/filter-documents) - Filtering Documents
+
+<DocumentationFooter />
