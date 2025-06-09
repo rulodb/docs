@@ -56,8 +56,8 @@
           "icon": "messages-square"
         },
         {
-          "anchor": "Chat on Matrix",
-          "href": "https://matrix.to/#/#rulodb:matrix.org",
+          "anchor": "Chat on Discord",
+          "href": "https://discord.gg/RzeAMwSM5R",
           "icon": "message-square-more"
         }
       ]
