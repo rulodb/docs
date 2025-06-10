@@ -52,52 +52,47 @@ It takes approximately 5 minutes to complete this guide. Get your coffee and let
 </Note>
 
 <Steps>
-    <Step title="Create a new project">
+  <Step title="Create a new project">
+    Create a new directory and install the RuloDB Typescript client.
+
     ```shell
     mkdir quickstart
     cd quickstart
-    bun init -y
+    bun add @rulodb/rulodb
     ```
-    </Step>
-
-<Step title="Install the SDK">```shell bun add msgpackr bun add @rulodb/rulodb ```</Step>
-
-  <Step title="Bring Your Own Client">
-    <Note>
-      To provide wide-range support for different runtimes, as of now, no clients are shipped with the SDK. When the client-server authentication is implemented, the SDKs will implement a client that can connect to RuloDB.
-    </Note>
-
-    For now, download the Bun client, and save it as `client.ts` within your project root directory.
-
-    ```shell
-    curl -sSL https://gist.githubusercontent.com/gabor-boros/a1cefcb48f059f5e7905cb2110ebb82c/raw/e8abf3ef5e02311fdd30606a30c652bdd54066dc/client.ts -o ./client.ts
-    ```
-
   </Step>
 
   <Step title="Write some queries">
-    Replace the content of the auto-generated `index.ts` with the following code:
+    Create a new file, `main.ts`, with the following content:
 
     ```ts
+    // Import RuloDB SDK
     import { r } from '@rulodb/rulodb';
-    import { Client } from "./client";
 
-    const client = new Client();
-    await client.connect("127.0.0.1", 6969);
+    // Connect to RuloDB
+    const client = await r.connect({ host: "127.0.0.1", port: 6969 });
 
-    const response = await r.db().table("default").insert({ name: "Thor", power: 100 }).run(client);
-    console.table(response.result);
+    // Insert a document into the default table
+    await r.db().table("default").insert({ name: "Thor", power: 100 }).run(client);
 
+    // Get a cursor for the default table
+    const cursor = await r.db().table("default").run(client);
+    const documents = await cursor.toArray();
+
+    // Print the documents to the console
+    console.table(documents);
+
+    // Close the client connection
     client.close();
     ```
 
   </Step>
 
-  <Step title="Write some queries">
-    Run `index.ts` using Bun:
+  <Step title="Execute the script">
+    Run `main.ts` using Bun to create a new document in the default table.
 
     ```shell
-    bun index.ts
+    bun main.ts
     ```
 
     In your terminal, you should see the newly inserted document. Congratulations! 🥳 You have successfully connected to RuloDB and inserted a document.
