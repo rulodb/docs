@@ -1,0 +1,94 @@
+---
+title: Logical OR
+sidebarTitle: or (||)
+description: |
+  Compare two values for logical OR operation.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+value.or(otherValue) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="otherValue" type="boolean" required>
+  The value to compare with.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="result" type="boolean">
+  Returns `true` if either value is `true` and `false` otherwise.
+</ParamField>
+
+## Behavior
+
+- Performs logical OR operation on two boolean values.
+- Returns `true` when at least one of the values is `true`.
+- Can be chained with other logical operators for complex conditions.
+
+## Notes & Caveats
+
+- Both values are evaluated as booleans using RuloDB's truthiness rules.
+- The operation is short-circuited: if the first value is `true`, the second is not evaluated.
+
+## Example
+
+### Filter for shipped or delivered orders
+
+Filter for orders where the status is either shipped or delivered.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.status.eq('shipped').or(doc.status.eq('delivered')))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter by multiple categories
+
+Filter for products in either electronics or books categories.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('products')
+  .filter((doc) => doc.category.eq('electronics').or(doc.category.eq('books')))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`not`](/sdk/logical-not) - Logical NOT Operation
+- [`field`](/sdk/field) - Referencing a Field
+- [`filter`](/sdk/filter) - Filtering Documents
+
+<DocumentationFooter />

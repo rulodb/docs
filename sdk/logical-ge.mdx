@@ -1,0 +1,96 @@
+---
+title: Greater Than or Equal
+sidebarTitle: ge (>=)
+description: |
+  Check if two values are greater than or equal to each other.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+value.ge(otherValue) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="otherValue" type="string | number" required>
+  The value to compare with. The type of the value being compared depends on the value used for
+  comparison.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="result" type="boolean">
+  Returns `true` if the first value is greater than or equal to the second value and `false`
+  otherwise.
+</ParamField>
+
+## Behavior
+
+- Performs greater than or equal comparison between two values.
+- Uses RuloDB's comparison semantics for ordering and type handling.
+- Can be chained with other logical operators for complex conditions.
+
+## Notes & Caveats
+
+- Comparison behavior depends on the data types being compared.
+- String comparisons use lexicographic ordering.
+
+## Example
+
+### Filter users by age
+
+Filter for users who are 21 or older.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('users')
+  .filter((doc) => doc.age.ge(21))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter by date
+
+Filter for orders created on or after a specific date.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.createdAt.ge('2024-01-01'))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`or`](/sdk/logical-or) - Logical OR Operation
+- [`not`](/sdk/logical-not) - Logical NOT Operation
+- [`field`](/sdk/field) - Referencing a Field
+- [`filter`](/sdk/filter) - Filtering Documents
+
+<DocumentationFooter />

@@ -5,8 +5,6 @@ description: 'The root object to build queries.'
 
 import DocumentationFooter from '/snippets/documentation-footer.mdx';
 
-In Rulo, the `r` object is the root object to build queries. It provides a set of functions to perform various operations on data. Every query starts with the `r` object.
-
 ## Syntax
 
 <CodeGroup>
@@ -33,17 +31,20 @@ No optional arguments.
 
 ## Behavior
 
-No special behavior.
+- The `r` object is the starting point for all RuloDB queries.
+- Provides access to database operations, table operations, and utility functions.
+- All queries must begin with `r` followed by the appropriate method chain.
 
 ## Notes & Caveats
 
-No notes.
+- The `r` object is imported from the RuloDB SDK.
+- Queries built with `r` are not executed until `.run(client)` is called.
 
 ## Example
 
-### Using the query builder
+### Basic query building
 
-Filter for `orders` where the order's `status` is `shipped` or `delivered`.
+Use `r` to start building database queries.
 
 <CodeGroup>
 
@@ -53,23 +54,53 @@ import { Client, r } from '@rulodb/rulodb';
 const client = new Client();
 await client.connect();
 
-// Use `r` to build a query and execute it
+// Use `r` to build a query
 await r.dbCreate('myDb').run(client);
+```
 
-await client.disconnect();
+</CodeGroup>
+
+### Query chaining
+
+Chain multiple operations starting with `r`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('users')
+  .filter((doc) => doc.age.ge(18))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Database operations
+
+Access database-level operations through `r`.
+
+<CodeGroup>
+
+```ts TypeScript
+// List all databases
+const cursor = await r.dbList().run(client);
+const databases = await cursor.toArray();
+
+// Select a specific database
+await r.db('myApp').tableCreate('users').run(client);
 ```
 
 </CodeGroup>
 
 ## Related Functions
 
-- [`db`](/sdk/referencing-a-database) - Referencing a Database
-- [`dbCreate`](/sdk/create-database) - Create a Database
-- [`dbDrop`](/sdk/drop-database) - Drop a Database
-- [`dbList`](/sdk/list-databases) - List Databases
-- [`table`](/sdk/referencing-a-table) - Referencing a Table
-- [`tableCreate`](/sdk/create-table) - Create a Table
-- [`tableDrop`](/sdk/drop-table) - Drop a Table
-- [`tableList`](/sdk/list-tables) - List Tables
+- [`db`](/sdk/db) - Referencing a Database
+- [`dbCreate`](/sdk/db-create) - Create a Database
+- [`dbDrop`](/sdk/db-drop) - Drop a Database
+- [`dbList`](/sdk/db-list) - List Databases
+- [`table`](/sdk/table) - Referencing a Table
+- [`tableCreate`](/sdk/table-create) - Create a Table
+- [`tableDrop`](/sdk/table-drop) - Drop a Table
+- [`tableList`](/sdk/table-list) - List Tables
 
 <DocumentationFooter />

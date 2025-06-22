@@ -1,8 +1,88 @@
 ---
 title: Installation
-description: ''
+description: 'Install and set up the RuloDB SDK in your project.'
 ---
 
 import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+Get started with RuloDB by installing the SDK in your TypeScript/JavaScript project.
+
+<Note>SDKs for other languages will be available once the query language is stabilized.</Note>
+
+## Package Installation
+
+<CodeGroup>
+
+```bash npm
+npm install @rulodb/rulodb
+```
+
+```bash yarn
+yarn add @rulodb/rulodb
+```
+
+```bash pnpm
+pnpm add @rulodb/rulodb
+```
+
+```bash bun
+bun add @rulodb/rulodb
+```
+
+</CodeGroup>
+
+## Verify Installation
+
+Create a test file to verify the connection:
+
+<CodeGroup>
+
+```ts TypeScript
+import { Client, r } from '@rulodb/rulodb';
+
+async function testConnection() {
+  const client = new Client();
+
+  try {
+    await client.connect();
+    console.log('✅ Connected to RuloDB');
+
+    await r.dbCreate('test').run(client);
+    console.log('✅ Database created');
+
+    const result = await r.dbList().run(client);
+    console.table('Databases:', await result.toArray());
+
+    await r.dbDrop('test').run(client);
+    console.log('✅ Database "test" dropped');
+
+    await client.disconnect();
+  } catch (error) {
+    console.error('❌ Validation failed:', error);
+  }
+}
+
+testConnection();
+```
+
+</CodeGroup>
+
+## Configuration
+
+Configure the client with connection options:
+
+<CodeGroup>
+
+```ts TypeScript
+const client = new Client({
+  host: process.env.RULODB_HOST || 'localhost',
+  port: parseInt(process.env.RULODB_PORT) || 6090,
+  timeout: 30000,
+  retries: 3,
+  poolSize: 10
+});
+```
+
+</CodeGroup>
 
 <DocumentationFooter />

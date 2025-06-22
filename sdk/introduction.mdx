@@ -1,8 +1,112 @@
 ---
 title: Introduction
-description: ''
+description: |
+  Getting started with the RuloDB SDK and understanding core concepts.
 ---
 
 import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+This documentation provides an overview of the RuloDB SDK, a powerful tool for interacting with RuloDB from TypeScript/JavaScript applications. It covers core concepts, including the `Client`, `QueryBuilder`, `Cursor` and more.
+
+## Core Concepts
+
+### Client
+
+The `Client` class is the primary interface to RuloDB. It manages connections and provides methods to connect and disconnect from the database server.
+
+```ts TypeScript
+import { Client } from '@rulodb/rulodb';
+
+const client = new Client({
+  host: 'localhost',
+  port: 6090
+});
+```
+
+### Query Builder
+
+The `r` object is the root of all queries in RuloDB. It provides a fluent interface for building queries that can be chained together.
+
+```ts TypeScript
+import { r } from '@rulodb/rulodb';
+
+await r
+  .db('myDatabase')
+  .table('users')
+  .filter((doc) => doc.age.ge(21))
+  .run(client);
+```
+
+### Database Hierarchy
+
+RuloDB organizes data in a hierarchical structure:
+
+- **Server**: The RuloDB instance
+- **Database**: A logical separation for related tables
+- **Table**: A collection of documents
+- **Document**: A JSON-like object containing your data
+
+### Cursor
+
+Many RuloDB operations return a `Cursor` object instead of raw data. Cursors provide efficient iteration over result sets.
+
+```ts TypeScript
+const cursor = await r.db().table('users').run(client);
+
+// Iterate over the cursor and fetch automatically if needed
+for await (const user of cursor) {
+  console.log(user);
+}
+```
+
+## Basic Usage
+
+### Connecting to RuloDB
+
+```ts TypeScript
+import { Client, r } from '@rulodb/rulodb';
+
+const client = new Client();
+await client.connect();
+
+// Your queries here
+
+await client.disconnect();
+```
+
+### Database Operations
+
+```ts TypeScript
+// Create a database
+await r.dbCreate('myApp').run(client);
+
+// List databases
+const databases = await r.dbList().run(client);
+
+// Select a database
+const query = r.db('myApp');
+```
+
+### Document Operations
+
+```ts TypeScript
+// Insert documents
+await r
+  .table('users')
+  .insert([
+    { name: 'Alice', age: 25 },
+    { name: 'Bob', age: 30 }
+  ])
+  .run(client);
+
+// Query documents
+const adults = await r
+  .table('users')
+  .filter((doc) => doc.age.ge(18))
+  .run(client);
+
+// Get a specific document
+const user = await r.table('users').get('user_id').run(client);
+```
 
 <DocumentationFooter />

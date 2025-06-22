@@ -1,0 +1,126 @@
+---
+title: Drop a Table
+sidebarTitle: tableDrop
+description: |
+  Drop (delete) an existing table and all its data from a database.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+<Danger>**Data Loss Warning**: This operation permanently deletes all data in the table.</Danger>
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.tableDrop(tableName) → result
+r.db(dbName).tableDrop(tableName) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="tableName" type="string" required>
+  Name of the table to drop. Must be an existing table name within the database.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ResponseField name="result" type="object">
+  Information about the operation.
+
+  <Expandable title="properties">
+    <ResponseField name="dropped" type="number">
+      The number of tables dropped (should be 1 for successful operations).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Behavior
+
+- When called without a database context (`r.tableDrop()`), operates on the default database.
+- When called with a database context (`r.db().tableDrop()`), operates on the specified database.
+- Permanently deletes the specified table and all its documents.
+- All secondary indexes associated with the table are also deleted.
+- The operation is atomic - either the table is completely dropped or an error occurs.
+- Once dropped, the table and its data cannot be recovered unless you have backups.
+- If the table doesn't exist, an error is thrown.
+
+## Notes & Caveats
+
+- All secondary indexes on the table are automatically dropped.
+- Any ongoing queries on the table will fail after the table is dropped.
+- Reserved system tables cannot be dropped.
+- Consider creating backups before dropping important tables.
+
+## Example
+
+### Drop a simple table
+
+Drop a table from the default database.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r.tableDrop('temp_data').run(client);
+
+console.log(`Dropped ${result.dropped} table(s)`);
+```
+
+</CodeGroup>
+
+### Drop a table from specific database
+
+Drop a table from the ecommerce database.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r.db('ecommerce').tableDrop('old_orders').run(client);
+
+console.log(`Dropped ${result.dropped} table(s)`);
+```
+
+</CodeGroup>
+
+### Drop multiple tables
+
+Drop several related tables in sequence.
+
+<CodeGroup>
+
+```ts TypeScript
+const tablesToDrop = ['temp_users', 'temp_posts', 'temp_comments'];
+
+for (const tableName of tablesToDrop) {
+  try {
+    const result = await r.db('staging').tableDrop(tableName).run(client);
+
+    console.log(`Dropped table: ${tableName}`);
+  } catch (error) {
+    console.error(`Failed to drop ${tableName}:`, error.message);
+  }
+}
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`db`](/sdk/db) - Referencing a database
+- [`table`](/sdk/table) - Referencing a table
+- [`tableCreate`](/sdk/table-create) - Creating a table
+- [`tableList`](/sdk/table-list) - Listing tables
+- [`delete`](/sdk/delete) - Deleting documents (alternative to dropping entire table)
+- [`dbDrop`](/sdk/db-drop) - Dropping an entire database
+
+<DocumentationFooter />

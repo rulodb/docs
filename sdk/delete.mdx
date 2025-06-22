@@ -1,0 +1,102 @@
+---
+title: Delete a Document
+sidebarTitle: delete
+description: |
+  Delete one or more documents from a table.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+<Danger>
+  **Data Loss Warning**: This operation permanently deletes all documents in the selection.
+</Danger>
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+selection.delete() → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ResponseField name="result" type="object">
+  Information about the operation.
+
+  <Expandable title="properties">
+    <ResponseField name="deleted" type="number">
+      The number of documents successfully deleted.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Behavior
+
+- Deletes documents from the selection (single document, filtered results, etc.).
+- Can delete multiple documents when applied to a selection that matches multiple documents.
+- If no documents match the selection, no error is thrown and `deleted` count will be 0.
+- Deleted documents are permanently removed.
+
+## Notes & Caveats
+
+- Delete operations are irreversible - make sure you have backups if needed.
+
+## Example
+
+### Delete a single document by ID
+
+Delete a specific user by their primary key.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r.table('users').get('user_123').delete().run(client);
+
+if (result.deleted > 0) {
+  console.log('User deleted successfully');
+} else {
+  console.log('User not found');
+}
+```
+
+</CodeGroup>
+
+### Delete multiple documents with filter
+
+Delete all inactive users from the system.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r
+  .table('users')
+  .filter((doc) => doc.field('status').eq('inactive'))
+  .delete()
+  .run(client);
+
+console.log(`Deleted ${result.deleted} inactive users`);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a document by primary key
+- [`getAll`](/sdk/get-all) - Get multiple documents
+- [`filter`](/sdk/filter) - Filter documents for deletion
+- [`insert`](/sdk/insert) - Insert new documents
+- [`update`](/sdk/update) - Update existing documents
+- [`table`](/sdk/table) - Reference a table
+
+<DocumentationFooter />

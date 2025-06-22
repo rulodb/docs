@@ -1,0 +1,93 @@
+---
+title: Negation
+sidebarTitle: not (!)
+description: |
+  Perform logical NOT operation on a boolean value.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+value.not() → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="result" type="boolean">
+  Returns `true` if the value is `false`, and `false` if the value is `true`.
+</ParamField>
+
+## Behavior
+
+- Inverts the boolean value of the expression.
+- Converts truthy values to `false` and falsy values to `true`.
+- Commonly used to negate conditions in filters and logical expressions.
+- Can be chained with other logical operators for complex conditions.
+
+## Notes & Caveats
+
+- The `not()` function operates on boolean values or expressions that evaluate to boolean.
+- When used with non-boolean values, RuloDB's truthiness rules apply.
+- Can be combined with other logical operators like [`and`](/sdk/logical-and) and [`or`](/sdk/logical-or).
+
+## Example
+
+### Filter users who are not premium
+
+Filter for users in the `users` table where the user is not a premium member.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('users')
+  .filter((doc) => doc.field('isPremium').not())
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter orders that are not completed
+
+Get orders that have not been completed yet.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.field('status').eq('completed').not())
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`or`](/sdk/logical-or) - Logical OR Operation
+- [`field`](/sdk/field) - Referencing a Field
+- [`table`](/sdk/table) - Referencing a Table
+- [`filter`](/sdk/filter) - Filtering Documents
+
+<DocumentationFooter />

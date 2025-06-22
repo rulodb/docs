@@ -1,5 +1,6 @@
 ---
-title: field
+title: Reference a Field
+sidebarTitle: field
 description: 'Reference a field in a document.'
 ---
 
@@ -12,8 +13,8 @@ To access a specific field in each document of a sequence, use `doc.field()`, wh
 <CodeGroup>
 
 ```ts TypeScript
-(doc) => doc.field(name, {optargs}) → value
-(doc) => doc.name → value
+object.fieldName → value
+object.field(name, {optargs}) → value
 ```
 
 </CodeGroup>
@@ -22,8 +23,10 @@ To access a specific field in each document of a sequence, use `doc.field()`, wh
 
 List of arguments to provide.
 
-<ParamField body="name" type="string" required>
-  Name of the field to reference. Use dot notation to reference nested fields.
+<ParamField body="name | fieldName" type="string" required>
+  Name of the field to reference. Use dot notation to reference nested fields. To reference
+  non-nested fields, use the field's name as a reference (see in the
+  [examples](/sdk/field#example)).
 </ParamField>
 
 ### Optargs
@@ -43,7 +46,7 @@ Optional arguments to customize the behavior of the function. Provided as an `ob
 
 ## Behavior
 
-- The `doc.field()` function is aware of the table's schema if defined.
+- The `object.field()` function is aware of the table's schema if defined.
 
 ## Notes & Caveats
 
@@ -101,16 +104,16 @@ await r
 
 ## Related Functions
 
-- [`eq`](/sdk/logical-eq-operation) - Logical Equality Operation
-- [`ne`](/sdk/logical-ne-operation) - Logical Inequality Operation
-- [`lt`](/sdk/logical-lt-operation) - Logical Less Than Operation
-- [`le`](/sdk/logical-le-operation) - Logical Less Than or Equal Operation
-- [`gt`](/sdk/logical-gt-operation) - Logical Greater Than Operation
-- [`ge`](/sdk/logical-ge-operation) - Logical Greater Than or Equal Operation
-- [`and`](/sdk/logical-and-operation) - Logical AND Operation
-- [`or`](/sdk/logical-or-operation) - Logical OR Operation
-- [`not`](/sdk/logical-not-operation) - Logical NOT Operation
-- [`table`](/sdk/referencing-a-table) - Referencing a Table
-- [`filter`](/sdk/filter-documents) - Filtering Documents
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`or`](/sdk/logical-or) - Logical OR Operation
+- [`not`](/sdk/logical-not) - Logical NOT Operation
+- [`table`](/sdk/table) - Referencing a Table
+- [`filter`](/sdk/filter) - Filtering Documents
 
 <DocumentationFooter />

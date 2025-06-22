@@ -15,10 +15,13 @@
   },
   "scripts": {
     "dev": "mint dev",
+    "lint": "mint broken-links",
     "format": "prettier --write ."
   },
   "dependencies": {
-    "mint": "^4.1.73",
+    "mint": "^4.1.73"
+  },
+  "devDependencies": {
     "prettier": "^3.5.3"
   }
 }

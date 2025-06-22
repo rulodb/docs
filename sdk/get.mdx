@@ -1,0 +1,89 @@
+---
+title: Get a Document
+sidebarTitle: get
+description: |
+  Retrieve a single document from a table by its primary key.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+table.get(key) → document
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="key" type="string" required>
+  The primary key value of the document to retrieve.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="document" type="object | null">
+  Returns the document object if found, or `null` if no document exists with the specified key.
+</ParamField>
+
+## Behavior
+
+- Retrieves exactly one document based on the primary key.
+- Returns `null` if no document is found with the specified key.
+- The operation uses the table's primary key index for optimal performance.
+
+## Notes & Caveats
+
+- RuloDB uses `id` as the primary key field.
+
+## Example
+
+### Get a user by ID
+
+Retrieve a specific user by their ID from the users table.
+
+<CodeGroup>
+
+```ts TypeScript
+const user = await r.table('users').get('user_123').run(client);
+
+if (user) {
+  console.log('Found user:', user.name);
+} else {
+  console.log('User not found');
+}
+```
+
+</CodeGroup>
+
+### Get a document from a specific database
+
+Retrieve an order from the orders table in the ecommerce database.
+
+<CodeGroup>
+
+```ts TypeScript
+const order = await r.db('ecommerce').table('orders').get('order_456').run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`getAll`](/sdk/get-all) - Get multiple documents by primary keys
+- [`filter`](/sdk/filter) - Filter documents by conditions
+- [`table`](/sdk/table) - Reference a table
+- [`insert`](/sdk/insert) - Insert documents
+- [`update`](/sdk/update) - Update documents
+- [`delete`](/sdk/delete) - Delete documents
+
+<DocumentationFooter />

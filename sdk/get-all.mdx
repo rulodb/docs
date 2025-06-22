@@ -1,0 +1,72 @@
+---
+title: Get Multiple Documents
+sidebarTitle: getAll
+description: |
+  Retrieve multiple documents from a table by their primary keys or indexed values.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+table.getAll(key1, key2, ..., keyN) → cursor
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="keys" type="string" required>
+  One or more primary key values to retrieve documents for. Keys must match the type of the primary
+  key or specified index field.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="cursor" type="Cursor">
+  Returns a [cursor](/sdk/introduction#cursor) pointing to the sequence of documents that match the
+  provided keys.
+</ParamField>
+
+## Behavior
+
+- If a key doesn't match any document, it is silently omitted from the results.
+
+## Notes & Caveats
+
+- Duplicate keys in the input will result in duplicate documents in the output.
+- Non-existent keys are ignored without throwing errors.
+
+## Example
+
+### Get multiple users by ID
+
+Retrieve several users by their primary keys.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.table('users').getAll('user_1', 'user_2', 'user_3').run(client);
+const users = await cursor.toArray();
+
+console.table(users);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a single document by primary key
+- [`filter`](/sdk/filter) - Filter documents by conditions
+- [`table`](/sdk/table) - Reference a table
+
+<DocumentationFooter />

@@ -1,0 +1,64 @@
+---
+title: List Databases
+sidebarTitle: dbList
+description: |
+  List all existing databases.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.dbList() → cursor
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="cursor" type="cursor<string>">
+  Returns a [cursor](/sdk/introduction#cursor) pointing to an array of database names.
+</ParamField>
+
+## Behavior
+
+No special behavior.
+
+## Notes & Caveats
+
+- System databases (those starting with `__`) are excluded from the results.
+
+## Example
+
+### List all databases
+
+List all existing databases.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.dbList().run(client);
+console.table(await cursor.toArray());
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`db`](/sdk/db) - Referencing a database
+- [`dbCreate`](/sdk/db-create) - Creating a database
+- [`dbList`](/sdk/db-list) - Listing databases
+
+<DocumentationFooter />

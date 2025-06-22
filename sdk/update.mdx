@@ -1,0 +1,105 @@
+---
+title: Update a Document
+sidebarTitle: update
+description: |
+  Update one or more documents in a table with new data.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+selection.update(object) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="object" type="object" required>
+  An object containing the fields to update
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ResponseField name="result" type="object">
+  Information about the operation.
+
+  <Expandable title="properties">
+    <ResponseField name="updated" type="number">
+      The number of documents successfully updated.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Behavior
+
+- Updates only the specified fields, leaving other fields unchanged.
+- Can update multiple documents when applied to a selection (`filter`, `getAll`, etc.).
+- If a document doesn't exist, the update operation skips it (no error thrown).
+
+## Notes & Caveats
+
+- Cannot update primary key (`id`) fields.
+- Use `insert` defining the same primary key (`id`) instead of `update` when you need to replace the entire document.
+
+## Example
+
+### Update a single document by ID
+
+Update a specific user's information.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r
+  .table('users')
+  .get('user_123')
+  .update({
+    email: 'newemail@example.com',
+    updatedAt: new Date().toISOString()
+  })
+  .run(client);
+
+console.log(`Updated ${result.updated} document(s)`);
+```
+
+</CodeGroup>
+
+### Update multiple documents with filter
+
+Update all users from a specific city.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r
+  .table('users')
+  .filter((doc) => doc.field('address.city').eq('San Francisco'))
+  .update({
+    timezone: 'America/Los_Angeles',
+    updatedAt: new Date().toISOString()
+  })
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a document by primary key
+- [`getAll`](/sdk/get-all) - Get multiple documents
+- [`filter`](/sdk/filter) - Filter documents for updates
+- [`insert`](/sdk/insert) - Insert new documents
+- [`delete`](/sdk/delete) - Delete documents
+
+<DocumentationFooter />

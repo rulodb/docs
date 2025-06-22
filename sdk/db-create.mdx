@@ -1,11 +1,11 @@
 ---
-title: dbCreate
-description: 'Create a new database.'
+title: Create a New Database
+sidebarTitle: dbCreate
+description: |
+  Create a new database that serves as a logical separation for tables and indexes.
 ---
 
 import DocumentationFooter from '/snippets/documentation-footer.mdx';
-
-A database is a collection of tables, similar to relational databases. To create a new database, use the `dbCreate` function.
 
 ## Syntax
 
@@ -36,14 +36,13 @@ No optional arguments.
 
   <Expandable title="properties">
     <ResponseField name="created" type="number">
-        The number of databases created.
+        The number of databases created (should be 1 for successful operations).
     </ResponseField>
   </Expandable>
 </ResponseField>
 
 ## Behavior
 
-- Creating a new database is a synchronous operation.
 - When the database is created, it is immediately available for use.
 - When a new RuloDB instance is started with a fresh data directory, a new database, called `default`, is created automatically.
 
@@ -52,8 +51,7 @@ No optional arguments.
 - The database name must be less than 255 characters.
 - The database name must consist of ASCII alphanumeric characters, hyphens, and underscores.
 - The database name must be unique within the RuloDB instance.
-- The database name must **not** be a reserved database name. The following names are reserved:
-  - `__system__`
+- The database name must **not** be a reserved database name. The following names are reserved: `__system__`.
 
 ## Example
 
@@ -64,7 +62,9 @@ Create a new database called `test`.
 <CodeGroup>
 
 ```ts TypeScript
-await r.dbCreate('test').run(client);
+const result = await r.dbCreate('test').run(client);
+
+console.log(`Created ${result.created} database(s)`);
 ```
 
 </CodeGroup>
@@ -72,8 +72,8 @@ await r.dbCreate('test').run(client);
 ## Related Functions
 
 - [`r`](/sdk/r-root) - Referencing the query builder
-- [`db`](/sdk/referencing-a-database) - Referencing a database
-- [`dbDrop`](/sdk/drop-database) - Dropping a database
-- [`dbList`](/sdk/list-databases) - Listing databases
+- [`db`](/sdk/db) - Referencing a database
+- [`dbDrop`](/sdk/db-drop) - Dropping a database
+- [`dbList`](/sdk/db-list) - Listing databases
 
 <DocumentationFooter />

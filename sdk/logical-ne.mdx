@@ -1,0 +1,95 @@
+---
+title: Inequality
+sidebarTitle: ne (!=)
+description: |
+  Check if two values are not equal.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+value.ne(otherValue) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="otherValue" type="string | number" required>
+  The value to compare with. The type of the value being compared depends on the value used for
+  comparison.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="result" type="boolean">
+  Returns `true` if the two values are not equal and `false` otherwise.
+</ParamField>
+
+## Behavior
+
+- Performs inequality comparison between two values.
+- Uses RuloDB's equality semantics for type coercion and comparison.
+- Can be chained with other logical operators for complex conditions.
+
+## Notes & Caveats
+
+- Type coercion may occur during comparison depending on the values being compared.
+- Use with appropriate data types to ensure expected comparison behavior.
+
+## Example
+
+### Filter users excluding specific names
+
+Filter for users where the first name is not "John".
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('users')
+  .filter((doc) => doc.first_name.ne('John'))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter orders outside of Europe
+
+Filter for orders where the shipping address continent is not Europe.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.field('address.continent').ne('Europe'))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`or`](/sdk/logical-or) - Logical OR Operation
+- [`not`](/sdk/logical-not) - Logical NOT Operation
+- [`field`](/sdk/field) - Referencing a Field
+- [`filter`](/sdk/filter) - Filtering Documents
+
+<DocumentationFooter />

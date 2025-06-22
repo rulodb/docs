@@ -110,12 +110,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "sdk/introduction",
-              "sdk/installation",
-              "sdk/authentication",
-              "sdk/response-schema"
-            ]
+            "pages": ["sdk/introduction", "sdk/installation", "sdk/authentication"]
           },
           {
             "group": "SDK Reference",
@@ -127,48 +122,43 @@
               {
                 "group": "Schema & Data Modeling",
                 "pages": [
-                  "sdk/create-database",
-                  "sdk/drop-database",
-                  "sdk/list-databases",
-                  "sdk/create-table",
-                  "sdk/drop-table",
-                  "sdk/list-tables"
+                  "sdk/db-create",
+                  "sdk/db-drop",
+                  "sdk/db-list",
+                  "sdk/table-create",
+                  "sdk/table-drop",
+                  "sdk/table-list"
                 ]
               },
               {
                 "group": "Data Manipulation",
-                "pages": ["sdk/insert-document", "sdk/update-document", "sdk/delete-document"]
+                "pages": ["sdk/insert", "sdk/update", "sdk/delete"]
               },
               {
                 "group": "Querying & Data Retrieval",
-                "pages": [
-                  "sdk/referencing-a-database",
-                  "sdk/referencing-a-table",
-                  "sdk/get-document",
-                  "sdk/filter-documents"
-                ]
+                "pages": ["sdk/db", "sdk/table", "sdk/get", "sdk/get-all", "sdk/filter"]
               },
               {
                 "group": "Document Manipulation",
-                "pages": ["sdk/referencing-a-field"]
+                "pages": ["sdk/field"]
               },
               {
                 "group": "Math & Logical Operations",
                 "pages": [
-                  "sdk/logical-eq-operation",
-                  "sdk/logical-ne-operation",
-                  "sdk/logical-lt-operation",
-                  "sdk/logical-le-operation",
-                  "sdk/logical-gt-operation",
-                  "sdk/logical-ge-operation",
-                  "sdk/logical-and-operation",
-                  "sdk/logical-or-operation",
-                  "sdk/logical-not-operation"
+                  "sdk/logical-eq",
+                  "sdk/logical-ne",
+                  "sdk/logical-lt",
+                  "sdk/logical-le",
+                  "sdk/logical-gt",
+                  "sdk/logical-ge",
+                  "sdk/logical-and",
+                  "sdk/logical-or",
+                  "sdk/logical-not"
                 ]
               },
               {
                 "group": "Control & Execution",
-                "pages": ["sdk/expressions"]
+                "pages": ["sdk/expr"]
               }
             ]
           }

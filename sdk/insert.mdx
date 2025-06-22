@@ -1,0 +1,112 @@
+---
+title: Insert a Document
+sidebarTitle: insert
+description: |
+  Insert one or more documents into a table.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+table.insert(document) → result
+table.insert([document1, document2, ...]) → result
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="document" type="object | array<object>" required>
+  A single document object or an array of document objects to insert into the table. Each document
+  should be a valid JSON object.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ResponseField name="result" type="object">
+  Information about the operation.
+
+  <Expandable title="properties">
+    <ResponseField name="inserted" type="number">
+      The number of documents successfully inserted.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Behavior
+
+- If no primary key (`id`) is provided, RuloDB automatically generates a unique ID.
+- When inserting multiple documents, the operation is performed in a single batch for efficiency.
+- On primary key conflict, the conflicting document will be replaced with the new one.
+
+## Notes & Caveats
+
+- Documents must be valid JSON objects (no functions, undefined values, etc.).
+- Auto-generated primary keys are ULID by default.
+- Primary key **fields** cannot be `null` or `undefined`.
+- Primary key must be a string.
+
+## Example
+
+### Insert a single document
+
+Insert a new user into the users table.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r
+  .table('users')
+  .insert({
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    age: 28,
+    createdAt: new Date().toISOString()
+  })
+  .run(client);
+
+console.log(`Inserted ${result.inserted} user(s)`);
+```
+
+</CodeGroup>
+
+### Insert multiple documents
+
+Insert several users in a single batch operation.
+
+<CodeGroup>
+
+```ts TypeScript
+const result = await r
+  .table('users')
+  .insert([
+    { name: 'Bob Smith', email: 'bob@example.com', age: 32 },
+    { name: 'Carol Davis', email: 'carol@example.com', age: 27 },
+    { name: 'David Wilson', email: 'david@example.com', age: 35 }
+  ])
+  .run(client);
+
+console.log(`Inserted ${result.inserted} user(s)`);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a document by primary key
+- [`getAll`](/sdk/get-all) - Get multiple documents
+- [`update`](/sdk/update) - Update existing documents
+- [`delete`](/sdk/delete) - Delete documents
+- [`table`](/sdk/table) - Reference a table
+
+<DocumentationFooter />

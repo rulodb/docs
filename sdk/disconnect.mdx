@@ -5,8 +5,6 @@ description: 'Disconnect from a RuloDB instance.'
 
 import DocumentationFooter from '/snippets/documentation-footer.mdx';
 
-To close the connection to RuloDB, you need to call the `disconnect` function of a `Client` instance.
-
 ## Syntax
 
 <CodeGroup>
@@ -31,17 +29,20 @@ No return value.
 
 ## Behavior
 
-- When a client is created, a connection pool is created internally.
+- Closes the connection to the RuloDB server.
+- Releases all resources associated with the client connection.
+- Should be called when the client is no longer needed to free up resources.
 
 ## Notes & Caveats
 
-- The client is created with a new `Client` instance. However, that is subject to change in future versions.
+- Once disconnected, the client cannot be used for further operations until reconnected.
+- Any ongoing queries will be cancelled when the connection is closed.
 
 ## Example
 
-### Opening a connection
+### Basic disconnect
 
-Filter for `orders` where the order's `status` is `shipped` or `delivered`.
+Close the connection after completing database operations.
 
 <CodeGroup>
 
@@ -49,18 +50,35 @@ Filter for `orders` where the order's `status` is `shipped` or `delivered`.
 import { Client, r } from '@rulodb/rulodb';
 const client = new Client();
 
-// Connect to RuloDB
 await client.connect();
-
 await r.dbCreate('myDb').run(client);
 await client.disconnect();
 ```
 
 </CodeGroup>
 
+### Disconnect in error handling
+
+Ensure proper cleanup even when operations fail.
+
+<CodeGroup>
+
+```ts TypeScript
+const client = new Client();
+
+try {
+  await client.connect();
+  await r.table('users').run(client);
+} finally {
+  await client.disconnect();
+}
+```
+
+</CodeGroup>
+
 ## Related Functions
 
-- [`r`](/sdk/r-root) - Referencing the query builder
 - [`connect`](/sdk/connect) - Connecting to RuloDB
+- [`r`](/sdk/r-root) - Referencing the query builder
 
 <DocumentationFooter />

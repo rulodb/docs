@@ -1,0 +1,90 @@
+---
+title: Select a Database
+sidebarTitle: db
+description: |
+  Temporarily select a database for subsequent operations.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.db(name) → database
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="name" type="string" default="default">
+  Name of the database to select. Must be a valid database name. If not defined, the default
+  database is selected.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="database" type="object">
+  The query builder object for database operations.
+</ParamField>
+
+## Behavior
+
+- In contrast to the [`table`](/sdk/table) function, this function does not return all tables in the database if called as `r.db('myDb').run(client)`.
+
+## Notes & Caveats
+
+No notes.
+
+## Example
+
+### Filter orders from the UAE in the default database
+
+Filter for orders in the `orders` table where the order's shipping address `country` is `UAE`, where the country is a nested field of `address`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .db()
+  .table('orders')
+  .filter((doc) => doc.field('address.country').eq('UAE'))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Select payments from the finance database
+
+Filter for payments in the `payments` table where the `amount` is greater than or equal to `100`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .db('finance')
+  .table('payments')
+  .filter((doc) => doc.field('amount').ge(100))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`connect`](/sdk/connect) - Connecting to RuloDB
+- [`disconnect`](/sdk/disconnect) - Disconnecting from RuloDB
+- [`dbCreate`](/sdk/db-create) - Creating a database
+- [`dbDrop`](/sdk/db-drop) - Dropping a database
+- [`dbList`](/sdk/db-list) - Listing databases
+
+<DocumentationFooter />

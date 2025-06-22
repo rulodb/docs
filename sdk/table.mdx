@@ -1,0 +1,117 @@
+---
+title: Referencing a Table
+sidebarTitle: table
+description: |
+  Reference a table within a database to perform operations on documents.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.table(tableName) → table
+r.db(dbName).table(tableName) → table
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="tableName" type="string" required>
+  Name of the table to reference. Must be a valid table name within the selected database.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="table" type="object">
+  Returns a query builder table reference that can be used for further operations like querying,
+  inserting, updating, or deleting documents.
+</ParamField>
+
+## Behavior
+
+- When called without a database context (`r.table()`), operates on the default database.
+- When called with a database context (`r.db().table()`), operates on the specified database.
+- The table reference itself doesn't execute any operations until combined with action methods like `run()`.
+- Returns all documents in the table when executed directly with `run()`.
+
+## Notes & Caveats
+
+- The table must exist before it can be referenced. Use [`tableCreate`](/sdk/table-create) to create new tables.
+- Table names are case-sensitive.
+- Table names must follow RuloDB naming conventions (ASCII alphanumeric characters, hyphens, and underscores).
+
+## Example
+
+### Reference a table in the default database
+
+Get all users from the `users` table in the default database.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.table('users').run(client);
+const users = await cursor.toArray();
+
+console.table(users);
+```
+
+</CodeGroup>
+
+### Reference a table in a specific database
+
+Get all orders from the `orders` table in the `ecommerce` database.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.db('ecommerce').table('orders').run(client);
+const orders = await cursor.toArray();
+
+console.table(orders);
+```
+
+</CodeGroup>
+
+### Chain operations on a table
+
+Filter and sort users from a specific table.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r
+  .table('users')
+  .filter((doc) => doc.age.ge(18))
+  .orderBy('name')
+  .limit(10)
+  .run(client);
+
+const adultUsers = await cursor.toArray();
+
+console.table(adultUsers);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`db`](/sdk/db) - Referencing a database
+- [`tableCreate`](/sdk/table-create) - Creating a table
+- [`tableDrop`](/sdk/table-drop) - Dropping a table
+- [`tableList`](/sdk/table-list) - Listing tables
+- [`insert`](/sdk/insert) - Inserting documents
+- [`filter`](/sdk/filter) - Filtering documents
+- [`get`](/sdk/get) - Getting a specific document
+
+<DocumentationFooter />

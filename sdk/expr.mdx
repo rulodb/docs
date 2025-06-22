@@ -1,0 +1,83 @@
+---
+title: Writing Expressions
+sidebarTitle: expr
+description: |
+  Create and manipulate expressions for complex queries and operations.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.expr(value) → expression
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="value" type="any" required>
+  The value to convert into a RuloDB expression. Can be a primitive value, object, array, or
+  function.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="expression" type="Expression">
+  Returns a RuloDB expression that can be used in queries, operations, and transformations.
+</ParamField>
+
+## Behavior
+
+- Allows you to perform operations on literal values within queries.
+- Enables complex computations and transformations within database operations.
+- Expressions are evaluated on the database server, reducing overhead on the client.
+
+## Notes & Caveats
+
+- Expressions are particularly useful for server-side computations.
+- Expressions can be chained with other RuloDB operations.
+
+## Example
+
+### Basic value expressions
+
+Convert values to RuloDB expressions.
+
+<CodeGroup>
+
+```ts TypeScript
+// Convert a number
+const numberExpr = r.expr(42);
+
+// Convert a string
+const stringExpr = r.expr('Hello, World!');
+
+// Convert an object
+const objectExpr = r.expr({
+  name: 'Alice',
+  age: 30,
+  active: true
+});
+
+// Convert an array
+const arrayExpr = r.expr([1, 2, 3, 4, 5]);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`filter`](/sdk/filter) - Filtering with expressions
+
+<DocumentationFooter />

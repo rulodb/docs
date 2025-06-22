@@ -1,0 +1,114 @@
+---
+title: Filter Documents
+sidebarTitle: filter
+description: |
+  Filter documents in a sequence based on a predicate function.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+sequence.filter(predicate) → sequence
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of arguments to provide.
+
+<ParamField body="predicate" type="function" required>
+  A function that takes a document as input and returns a boolean value. Documents for which the
+  predicate returns `true` will be included in the result.
+</ParamField>
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="sequence" type="Cursor">
+  Returns a [cursor](/sdk/introduction#cursor) pointing to the filtered sequence of documents.
+</ParamField>
+
+## Behavior
+
+- The `filter` function evaluates the predicate for each document in the sequence.
+- Only documents for which the predicate returns `true` are included in the result.
+- The original sequence is not modified; a new filtered sequence is returned.
+- If no documents match the predicate, an empty sequence is returned.
+
+## Notes & Caveats
+
+- The predicate function can only have query builder expressions in its body.
+- The predicate function receives a single document parameter.
+- Use [`field`](/sdk/field) to access specific fields within the document.
+- Complex predicates can be built using logical operators like [`and`](/sdk/logical-and), [`or`](/sdk/logical-or), and [`not`](/sdk/logical-not).
+
+## Example
+
+### Filter users by age
+
+Filter for users in the `users` table where the user's `age` is greater than or equal to `21`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('users')
+  .filter((doc) => doc.age.ge(21))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter with nested fields
+
+Filter for orders where the shipping address `country` is `UAE`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.field('address.country').eq('UAE'))
+  .run(client);
+```
+
+</CodeGroup>
+
+### Filter with multiple conditions
+
+Filter for orders where the status is `shipped` and the value is greater than `100`.
+
+<CodeGroup>
+
+```ts TypeScript
+await r
+  .table('orders')
+  .filter((doc) => doc.status.eq('shipped').and(doc.value.gt(100)))
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`eq`](/sdk/logical-eq) - Logical Equality Operation
+- [`ne`](/sdk/logical-ne) - Logical Inequality Operation
+- [`lt`](/sdk/logical-lt) - Logical Less Than Operation
+- [`le`](/sdk/logical-le) - Logical Less Than or Equal Operation
+- [`gt`](/sdk/logical-gt) - Logical Greater Than Operation
+- [`ge`](/sdk/logical-ge) - Logical Greater Than or Equal Operation
+- [`and`](/sdk/logical-and) - Logical AND Operation
+- [`or`](/sdk/logical-or) - Logical OR Operation
+- [`not`](/sdk/logical-not) - Logical NOT Operation
+- [`field`](/sdk/field) - Referencing a Field
+- [`table`](/sdk/table) - Referencing a Table
+
+<DocumentationFooter />

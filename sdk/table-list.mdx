@@ -1,0 +1,89 @@
+---
+title: List Tables
+sidebarTitle: tableList
+description: |
+  List all tables within a database.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+r.tableList() → cursor
+r.db(dbName).tableList() → cursor
+```
+
+</CodeGroup>
+
+### Arguments
+
+No arguments.
+
+### Optargs
+
+No optional arguments.
+
+### Returns
+
+<ParamField body="cursor" type="cursor<string>">
+  Returns a [cursor](/sdk/introduction#cursor) pointing to an array of table names within the
+  specified database.
+</ParamField>
+
+## Behavior
+
+- Lists all tables in the specified database (or default database if not specified).
+- Returns table names as strings in alphabetical order.
+- If the database is empty (no tables), returns an empty array.
+
+## Notes & Caveats
+
+- Table names are returned as strings, not table references.
+- The order of table names is consistent (alphabetical).
+
+## Example
+
+### List tables in default database
+
+Get all tables from the default database.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.tableList().run(client);
+const tables = await cursor.toArray();
+
+console.log('Tables in default database:', tables);
+// Output: ['posts', 'users', 'comments']
+```
+
+</CodeGroup>
+
+### List tables in specific database
+
+Get all tables from the ecommerce database.
+
+<CodeGroup>
+
+```ts TypeScript
+const cursor = await r.db('ecommerce').tableList().run(client);
+
+const tables = await cursor.toArray();
+console.log('Tables in ecommerce database:', tables);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`r`](/sdk/r-root) - Referencing the query builder
+- [`db`](/sdk/db) - Referencing a database
+- [`dbList`](/sdk/db-list) - Listing databases
+- [`table`](/sdk/table) - Referencing a table
+- [`tableCreate`](/sdk/table-create) - Creating a table
+- [`tableDrop`](/sdk/table-drop) - Dropping a table
+
+<DocumentationFooter />
