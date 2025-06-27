@@ -1,0 +1,60 @@
+name: Lint and Format
+
+on:
+  push:
+    branches: [main, live]
+  pull_request:
+    branches: [main, live]
+
+jobs:
+  check-formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: |
+          npm run format
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "❌ Code formatting issues found!"
+            echo "The following files need formatting:"
+            git status --porcelain
+            echo ""
+            echo "Please run 'npm run format' locally and commit the changes."
+            exit 1
+          else
+            echo "✅ Code is properly formatted!"
+          fi
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
