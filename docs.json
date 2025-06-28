@@ -3,6 +3,11 @@
   "theme": "linden",
   "name": "RuloDB Documentation",
   "description": "Explore the official RuloDB documentation for RuloDB internals, SDK references, guides, and tutorials.",
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-8ZJED1S4SP"
+    }
+  },
   "icons": {
     "library": "lucide"
   },
