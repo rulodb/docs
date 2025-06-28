@@ -140,7 +140,7 @@
               },
               {
                 "group": "Document Manipulation",
-                "pages": ["sdk/field"]
+                "pages": ["sdk/field", "sdk/pluck", "sdk/without"]
               },
               {
                 "group": "Math & Logical Operations",

@@ -1,0 +1,108 @@
+---
+title: Pluck Fields
+sidebarTitle: pluck
+description: |
+  Pluck out one or more fields from either an object or a sequence of objects.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+object.pluck(key1, key2, ..., keyN) → object
+object.pluck([key1, key2, ..., keyN], {optargs}) → object
+
+sequence.pluck(key1, key2, ..., keyN) → cursor
+sequence.pluck([key1, key2, ..., keyN], {optargs}) → cursor
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of field selectors to pluck from the documents.
+
+<ParamField body="key" type="string" required>
+  Name of the field(s) to reference. Use dot notation to reference nested fields.
+</ParamField>
+
+### Optargs
+
+Optional arguments to customize the behavior of the function. Provided as an `object`.
+
+<ParamField body="separator" type="string" default=".">
+  Separator to use when referencing nested fields
+</ParamField>
+
+### Returns
+
+<ParamField body="result" type="object | Cursor">
+  For single objects, returns an object containing only the specified fields. For sequences, returns
+  a [cursor](/sdk/introduction#cursor) pointing to the projected sequence of documents.
+</ParamField>
+
+## Behavior
+
+- Plucks out only the specified fields from each document, creating a projection.
+- If a specified field doesn't exist in a document, it's omitted from the result.
+- When the primary key (`id`) is **not included** in the projected fields, the cursor cannot be iterated over for updates.
+
+## Notes & Caveats
+
+- The original documents are not modified; new documents are returned.
+
+## Example
+
+### Pluck specific fields from a user
+
+Get only the `id`, `name` and `email` fields from a user document.
+
+<CodeGroup>
+
+```ts TypeScript
+const user = await r.table('users').get('user_123').pluck('id', 'name', 'email').run(client);
+```
+
+</CodeGroup>
+
+### Pluck fields from multiple documents
+
+Get only the `id`, `title` and `author` fields from all blog posts.
+
+<CodeGroup>
+
+```ts TypeScript
+const posts = await r.table('posts').pluck('id', 'title', 'author').run(client);
+```
+
+</CodeGroup>
+
+### Pluck nested fields
+
+Get nested address information from user documents.
+
+<CodeGroup>
+
+```ts TypeScript
+const users = await r
+  .table('users')
+  .pluck('id', 'name', 'address.city', 'address.country')
+  .run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a document by primary key
+- [`getAll`](/sdk/get-all) - Get multiple documents
+- [`filter`](/sdk/filter) - Filter documents
+- [`field`](/sdk/field) - Reference a specific field
+- [`update`](/sdk/update) - Update documents
+- [`insert`](/sdk/insert) - Insert new documents
+- [`without`](/sdk/without) - Remove fields from documents
+
+<DocumentationFooter />

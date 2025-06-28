@@ -1,0 +1,105 @@
+---
+title: Without Fields
+sidebarTitle: without
+description: |
+  Remove one or more fields from either an object or a sequence of objects.
+---
+
+import DocumentationFooter from '/snippets/documentation-footer.mdx';
+
+## Syntax
+
+<CodeGroup>
+
+```ts TypeScript
+object.without(key1, key2, ..., keyN) → object
+object.without([key1, key2, ..., keyN], {optargs}) → object
+
+sequence.without(key1, key2, ..., keyN) → cursor
+sequence.without([key1, key2, ..., keyN], {optargs}) → cursor
+```
+
+</CodeGroup>
+
+### Arguments
+
+List of field selectors to remove from the documents.
+
+<ParamField body="key" type="string" required>
+  Name of the field(s) to reference. Use dot notation to reference nested fields.
+</ParamField>
+
+### Optargs
+
+Optional arguments to customize the behavior of the function. Provided as an `object`.
+
+<ParamField body="separator" type="string" default=".">
+  Separator to use when referencing nested fields
+</ParamField>
+
+### Returns
+
+<ParamField body="result" type="object | Cursor">
+  For single objects, returns an object lacking the specified fields. For sequences, returns a
+  [cursor](/sdk/introduction#cursor) pointing to the projected sequence of documents.
+</ParamField>
+
+## Behavior
+
+- Removes the specified fields from each document.
+- If a specified field doesn't exist in a document, it's ignored.
+- When the primary key (`id`) is **not included** in the returned fields, the cursor cannot be iterated over for updates.
+
+## Notes & Caveats
+
+- The original documents are not modified; new documents are returned.
+
+## Example
+
+### Remove specific fields from a user
+
+Remove the `password` field from a user document.
+
+<CodeGroup>
+
+```ts TypeScript
+const user = await r.table('users').get('user_123').without('password').run(client);
+```
+
+</CodeGroup>
+
+### Remove fields from multiple documents
+
+Remove the `updated_at` and `created_at` fields from all blog posts.
+
+<CodeGroup>
+
+```ts TypeScript
+const posts = await r.table('posts').without('created_at', 'updated_at').run(client);
+```
+
+</CodeGroup>
+
+### Remove nested fields
+
+Remove the nested address information from user documents.
+
+<CodeGroup>
+
+```ts TypeScript
+const users = await r.table('users').without('address.street').run(client);
+```
+
+</CodeGroup>
+
+## Related Functions
+
+- [`get`](/sdk/get) - Get a document by primary key
+- [`getAll`](/sdk/get-all) - Get multiple documents
+- [`filter`](/sdk/filter) - Filter documents
+- [`field`](/sdk/field) - Reference a specific field
+- [`update`](/sdk/update) - Update documents
+- [`insert`](/sdk/insert) - Insert new documents
+- [`pluck`](/sdk/pluck) - Pluck fields from documents
+
+<DocumentationFooter />
